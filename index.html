@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Compare Answers</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <h1>Compare Answers</h1>
+        <p>Rank anonymized LLM answers, then reveal which model wrote each one.</p>
+      </div>
+      <div class="actions">
+        <button id="loadSampleButton" type="button">Load sample</button>
+        <label class="file-button">
+          Import JSON
+          <input id="importInput" type="file" accept="application/json">
+        </label>
+        <button id="exportButton" type="button">Export results</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <aside class="sidebar" aria-label="Questions">
+        <div class="sidebar-header">
+          <h2>Questions</h2>
+          <button id="addQuestionButton" type="button" title="Add question">+</button>
+        </div>
+        <ol id="questionList" class="question-list"></ol>
+      </aside>
+
+      <section class="workspace" aria-live="polite">
+        <div id="emptyState" class="empty-state">
+          <h2>No questions loaded</h2>
+          <p>Import a JSON file, load the sample, or add your first question manually.</p>
+        </div>
+
+        <article id="reviewPanel" class="review-panel hidden">
+          <div class="question-card">
+            <div class="question-meta">
+              <span id="questionCounter"></span>
+              <span id="revealStatus"></span>
+            </div>
+            <label for="questionText">Question</label>
+            <textarea id="questionText" rows="4" spellcheck="true"></textarea>
+          </div>
+
+          <div class="answer-toolbar">
+            <div>
+              <h2>Rank Answers</h2>
+              <p>Use the arrows to order answers from best to weakest. Model names stay hidden until reveal.</p>
+            </div>
+            <div class="actions">
+              <button id="addAnswerButton" type="button">Add answer</button>
+              <button id="resetRankingButton" type="button">Reset ranking</button>
+              <button id="revealButton" type="button">Reveal models</button>
+            </div>
+          </div>
+
+          <ol id="answerList" class="answer-list"></ol>
+
+          <div class="nav-row">
+            <button id="previousButton" type="button">Previous</button>
+            <button id="nextButton" type="button">Next</button>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <template id="questionItemTemplate">
+      <li>
+        <button type="button" class="question-button"></button>
+      </li>
+    </template>
+
+    <template id="answerTemplate">
+      <li class="answer-item">
+        <div class="rank-number"></div>
+        <div class="answer-body">
+          <div class="answer-header">
+            <strong class="answer-label"></strong>
+            <span class="model-name hidden"></span>
+          </div>
+          <textarea class="answer-text" rows="8" spellcheck="true"></textarea>
+          <label class="model-editor">
+            Model
+            <input class="model-input" type="text" placeholder="Hidden while ranking">
+          </label>
+        </div>
+        <div class="answer-controls" aria-label="Ranking controls">
+          <button type="button" class="move-up" title="Move up">↑</button>
+          <button type="button" class="move-down" title="Move down">↓</button>
+          <button type="button" class="remove-answer" title="Remove answer">×</button>
+        </div>
+      </li>
+    </template>
+
+    <script src="app.js" defer></script>
+  </body>
+</html>
