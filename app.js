@@ -36,6 +36,9 @@ const elements = {
   answerList: document.querySelector("#answerList"),
   emptyState: document.querySelector("#emptyState"),
   exportButton: document.querySelector("#exportButton"),
+  exportDialog: document.querySelector("#exportDialog"),
+  exportStatus: document.querySelector("#exportStatus"),
+  exportText: document.querySelector("#exportText"),
   importInput: document.querySelector("#importInput"),
   loadSampleButton: document.querySelector("#loadSampleButton"),
   nextButton: document.querySelector("#nextButton"),
@@ -47,6 +50,7 @@ const elements = {
   revealButton: document.querySelector("#revealButton"),
   revealStatus: document.querySelector("#revealStatus"),
   reviewPanel: document.querySelector("#reviewPanel"),
+  copyExportButton: document.querySelector("#copyExportButton"),
 };
 
 const questionItemTemplate = document.querySelector("#questionItemTemplate");
@@ -91,6 +95,10 @@ function getCurrentQuestionIndex() {
 
 function saveState() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+function setExportStatus(message) {
+  elements.exportStatus.textContent = message;
 }
 
 function loadState() {
@@ -268,6 +276,11 @@ function toggleReveal() {
 }
 
 function exportResults() {
+  if (state.questions.length === 0) {
+    setExportStatus("Load questions before exporting.");
+    return;
+  }
+
   const payload = JSON.stringify({ questions: state.questions }, null, 2);
   const blob = new Blob([payload], { type: "application/json" });
   const url = URL.createObjectURL(blob);
@@ -275,8 +288,25 @@ function exportResults() {
 
   link.href = url;
   link.download = `compare-answers-results-${new Date().toISOString().slice(0, 10)}.json`;
+  link.style.display = "none";
+  document.body.append(link);
   link.click();
-  URL.revokeObjectURL(url);
+  link.remove();
+  setExportStatus(`Exported ${state.questions.length} question${state.questions.length === 1 ? "" : "s"}.`);
+  elements.exportText.value = payload;
+  elements.exportDialog.showModal();
+  window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+async function copyExportJson() {
+  elements.exportText.select();
+  try {
+    await navigator.clipboard.writeText(elements.exportText.value);
+    setExportStatus("Copied JSON.");
+  } catch {
+    document.execCommand("copy");
+    setExportStatus("Copied JSON.");
+  }
 }
 
 async function importQuestions(event) {
@@ -309,6 +339,7 @@ function goToQuestion(offset) {
 
 elements.addQuestionButton.addEventListener("click", addQuestion);
 elements.addAnswerButton.addEventListener("click", addAnswer);
+elements.copyExportButton.addEventListener("click", copyExportJson);
 elements.exportButton.addEventListener("click", exportResults);
 elements.importInput.addEventListener("change", importQuestions);
 elements.loadSampleButton.addEventListener("click", () => setQuestions(sampleQuestions));

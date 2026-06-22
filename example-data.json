@@ -1,0 +1,38 @@
+{
+  "questions": [
+    {
+      "question": "What is the clearest way to explain why the sky is blue to a curious ten-year-old?",
+      "answers": [
+        {
+          "model": "gpt-5",
+          "text": "Sunlight looks white, but it is actually made of many colors. When sunlight reaches Earth's air, the tiny molecules in the air scatter blue light more than most other colors. That scattered blue light comes to your eyes from every direction, so the sky looks blue."
+        },
+        {
+          "model": "claude-sonnet",
+          "text": "Imagine sunlight as a bunch of colored balls traveling together. The air is better at bumping the blue balls around than the red or yellow ones, so blue gets spread all across the sky. That is why, when you look up, blue is the color you see almost everywhere."
+        },
+        {
+          "model": "gemini-pro",
+          "text": "The sky appears blue because blue light has a shorter wavelength and scatters more easily in the atmosphere. This process, called Rayleigh scattering, sends blue light in many directions before it reaches your eyes."
+        }
+      ]
+    },
+    {
+      "question": "Should schools allow students to use AI tools for homework? Give a balanced answer.",
+      "answers": [
+        {
+          "model": "gpt-5",
+          "text": "Schools should allow AI tools in some homework situations, but with clear rules. AI can help students brainstorm, get explanations, and revise their work. However, students should still show their own thinking, cite when they used AI, and avoid submitting AI-written answers as if they wrote them alone."
+        },
+        {
+          "model": "claude-sonnet",
+          "text": "AI tools can be useful learning aids, much like calculators or spellcheckers, but they can also make it easier to skip the actual learning. A fair policy would allow AI for support, feedback, and practice while requiring students to explain their reasoning and disclose meaningful AI help."
+        },
+        {
+          "model": "gemini-pro",
+          "text": "The best answer is not a total ban or total freedom. Students should learn how to use AI responsibly because it will be part of many workplaces. At the same time, teachers need assignments and grading methods that check understanding, not just polished final text."
+        }
+      ]
+    }
+  ]
+}

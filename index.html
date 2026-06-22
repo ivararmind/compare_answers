@@ -19,8 +19,26 @@
           <input id="importInput" type="file" accept="application/json">
         </label>
         <button id="exportButton" type="button">Export results</button>
+        <span id="exportStatus" class="status-message" role="status"></span>
       </div>
     </header>
+
+    <dialog id="exportDialog" class="export-dialog">
+      <form method="dialog" class="dialog-shell">
+        <div class="dialog-header">
+          <div>
+            <h2>Exported JSON</h2>
+            <p>If no file downloaded, copy this JSON and save it wherever you want.</p>
+          </div>
+          <button type="submit" aria-label="Close export dialog">×</button>
+        </div>
+        <textarea id="exportText" rows="18" readonly></textarea>
+        <div class="dialog-actions">
+          <button id="copyExportButton" type="button">Copy JSON</button>
+          <button type="submit">Done</button>
+        </div>
+      </form>
+    </dialog>
 
     <main class="layout">
       <aside class="sidebar" aria-label="Questions">
