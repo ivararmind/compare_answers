@@ -14,6 +14,10 @@
         {
           "model": "gemini-pro",
           "text": "The sky appears blue because blue light has a shorter wavelength and scatters more easily in the atmosphere. This process, called Rayleigh scattering, sends blue light in many directions before it reaches your eyes."
+        },
+        {
+          "model": "llama",
+          "text": "White sunlight contains many colors. As it moves through the atmosphere, blue light gets spread around by the air more strongly than colors like red. Because that blue light is scattered across the whole sky, the sky looks blue to us."
         }
       ]
     },
@@ -31,6 +35,10 @@
         {
           "model": "gemini-pro",
           "text": "The best answer is not a total ban or total freedom. Students should learn how to use AI responsibly because it will be part of many workplaces. At the same time, teachers need assignments and grading methods that check understanding, not just polished final text."
+        },
+        {
+          "model": "llama",
+          "text": "Schools should probably allow AI tools with limits. They can help students understand confusing ideas and improve drafts, but they should not replace the student's own work. Teachers can require students to show notes, reasoning, or drafts so AI supports learning instead of hiding whether learning happened."
         }
       ]
     }

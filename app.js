@@ -21,6 +21,11 @@ const sampleQuestions = [
         model: "Model C",
         text: "Think of sunlight as a box of colored pencils. The air shakes the blue pencil marks loose more easily, spreading blue everywhere above us while the other colors travel more straight ahead.",
       },
+      {
+        id: crypto.randomUUID(),
+        model: "Model D",
+        text: "The sky looks blue because Earth's atmosphere redirects blue sunlight toward us from every part of the sky. Other colors pass through more directly, so they are less visible overhead.",
+      },
     ],
   },
 ];
@@ -31,8 +36,6 @@ const state = {
 };
 
 const elements = {
-  addAnswerButton: document.querySelector("#addAnswerButton"),
-  addQuestionButton: document.querySelector("#addQuestionButton"),
   answerList: document.querySelector("#answerList"),
   emptyState: document.querySelector("#emptyState"),
   exportButton: document.querySelector("#exportButton"),
@@ -158,7 +161,7 @@ function renderCurrentQuestion() {
 
   elements.questionCounter.textContent = `Question ${currentIndex + 1} of ${state.questions.length}`;
   elements.revealStatus.textContent = question.revealed ? "Models revealed" : "Models hidden";
-  elements.questionText.value = question.question;
+  elements.questionText.textContent = question.question;
   elements.previousButton.disabled = currentIndex <= 0;
   elements.nextButton.disabled = currentIndex >= state.questions.length - 1;
   elements.revealButton.textContent = question.revealed ? "Hide models" : "Reveal models";
@@ -175,31 +178,16 @@ function renderAnswers(question) {
     const answerLabel = item.querySelector(".answer-label");
     const modelName = item.querySelector(".model-name");
     const answerText = item.querySelector(".answer-text");
-    const modelInput = item.querySelector(".model-input");
     const moveUp = item.querySelector(".move-up");
     const moveDown = item.querySelector(".move-down");
-    const removeAnswer = item.querySelector(".remove-answer");
 
     rankNumber.textContent = index + 1;
     answerLabel.textContent = `Answer ${String.fromCharCode(65 + index)}`;
     modelName.textContent = answer.model || "Unknown model";
     modelName.classList.toggle("hidden", !question.revealed);
-    modelInput.closest(".model-editor").classList.toggle("hidden", !question.revealed);
-    answerText.value = answer.text;
-    modelInput.value = answer.model;
+    answerText.textContent = answer.text;
     moveUp.disabled = index === 0;
     moveDown.disabled = index === question.answers.length - 1;
-
-    answerText.addEventListener("input", () => {
-      answer.text = answerText.value;
-      saveState();
-    });
-
-    modelInput.addEventListener("input", () => {
-      answer.model = modelInput.value;
-      saveState();
-      renderAnswers(question);
-    });
 
     moveUp.addEventListener("click", () => {
       moveAnswer(question, index, index - 1);
@@ -209,12 +197,6 @@ function renderAnswers(question) {
       moveAnswer(question, index, index + 1);
     });
 
-    removeAnswer.addEventListener("click", () => {
-      question.answers.splice(index, 1);
-      saveState();
-      render();
-    });
-
     elements.answerList.append(item);
   });
 }
@@ -222,36 +204,6 @@ function renderAnswers(question) {
 function moveAnswer(question, fromIndex, toIndex) {
   const [answer] = question.answers.splice(fromIndex, 1);
   question.answers.splice(toIndex, 0, answer);
-  saveState();
-  render();
-}
-
-function addQuestion() {
-  const question = {
-    id: crypto.randomUUID(),
-    question: "",
-    revealed: false,
-    answers: [
-      { id: crypto.randomUUID(), model: "", text: "" },
-      { id: crypto.randomUUID(), model: "", text: "" },
-    ],
-  };
-
-  state.questions.push(question);
-  state.currentQuestionId = question.id;
-  saveState();
-  render();
-}
-
-function addAnswer() {
-  const question = getCurrentQuestion();
-  if (!question) return;
-
-  question.answers.push({
-    id: crypto.randomUUID(),
-    model: "",
-    text: "",
-  });
   saveState();
   render();
 }
@@ -337,22 +289,12 @@ function goToQuestion(offset) {
   render();
 }
 
-elements.addQuestionButton.addEventListener("click", addQuestion);
-elements.addAnswerButton.addEventListener("click", addAnswer);
 elements.copyExportButton.addEventListener("click", copyExportJson);
 elements.exportButton.addEventListener("click", exportResults);
 elements.importInput.addEventListener("change", importQuestions);
 elements.loadSampleButton.addEventListener("click", () => setQuestions(sampleQuestions));
 elements.nextButton.addEventListener("click", () => goToQuestion(1));
 elements.previousButton.addEventListener("click", () => goToQuestion(-1));
-elements.questionText.addEventListener("input", () => {
-  const question = getCurrentQuestion();
-  if (!question) return;
-
-  question.question = elements.questionText.value;
-  saveState();
-  renderQuestions();
-});
 elements.resetRankingButton.addEventListener("click", resetRanking);
 elements.revealButton.addEventListener("click", toggleReveal);
 

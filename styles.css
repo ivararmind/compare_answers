@@ -156,18 +156,7 @@ p {
 }
 
 .sidebar-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
   margin-bottom: 0.75rem;
-}
-
-.sidebar-header button {
-  width: 2.25rem;
-  height: 2.25rem;
-  padding: 0;
-  font-size: 1.3rem;
 }
 
 .question-list,
@@ -200,7 +189,7 @@ p {
 
 .empty-state,
 .review-panel {
-  max-width: 68rem;
+  max-width: 96rem;
   margin: 0 auto;
 }
 
@@ -234,16 +223,32 @@ p {
 .question-meta,
 .answer-header {
   display: flex;
-  justify-content: space-between;
+  align-items: center;
   gap: 1rem;
   color: var(--muted);
   font-size: 0.9rem;
+}
+
+.question-meta {
+  justify-content: space-between;
 }
 
 label {
   color: var(--muted);
   font-size: 0.9rem;
   font-weight: 650;
+}
+
+.field-label {
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 650;
+}
+
+.question-text {
+  color: var(--text);
+  font-size: 1.05rem;
+  white-space: pre-wrap;
 }
 
 textarea,
@@ -278,19 +283,22 @@ button:focus-visible,
 
 .answer-list {
   display: grid;
-  gap: 0.75rem;
+  grid-template-columns: repeat(4, minmax(14rem, 1fr));
+  gap: 0.85rem;
+  align-items: stretch;
 }
 
 .answer-item {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  gap: 0.85rem;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 0.75rem;
   padding: 0.85rem;
 }
 
 .rank-number {
-  display: grid;
+  display: inline-grid;
   place-items: center;
+  flex: 0 0 auto;
   width: 2rem;
   height: 2rem;
   border-radius: 50%;
@@ -302,22 +310,20 @@ button:focus-visible,
 .answer-body {
   display: grid;
   min-width: 0;
-  gap: 0.6rem;
-}
-
-.model-editor {
-  display: grid;
-  gap: 0.35rem;
+  align-content: start;
+  gap: 0.75rem;
 }
 
 .model-name {
   color: var(--accent-strong);
   font-weight: 800;
+  margin-left: auto;
+  overflow-wrap: anywhere;
 }
 
 .answer-controls {
-  display: grid;
-  align-content: start;
+  display: flex;
+  justify-content: space-between;
   gap: 0.4rem;
 }
 
@@ -327,8 +333,10 @@ button:focus-visible,
   padding: 0;
 }
 
-.remove-answer {
-  color: var(--danger);
+.answer-text {
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
 }
 
 .nav-row {
@@ -364,12 +372,13 @@ button:focus-visible,
     padding-bottom: 0.35rem;
   }
 
-  .answer-item {
-    grid-template-columns: auto minmax(0, 1fr);
+  .answer-list {
+    grid-template-columns: 1fr;
   }
+}
 
-  .answer-controls {
-    grid-column: 1 / -1;
-    grid-template-columns: repeat(3, 2.25rem);
+@media (min-width: 781px) and (max-width: 1180px) {
+  .answer-list {
+    grid-template-columns: repeat(2, minmax(16rem, 1fr));
   }
 }

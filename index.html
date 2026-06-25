@@ -10,7 +10,7 @@
     <header class="topbar">
       <div>
         <h1>Compare Answers</h1>
-        <p>Rank anonymized LLM answers, then reveal which model wrote each one.</p>
+        <p>Import questions, rank four anonymized LLM answers, then reveal which model wrote each one.</p>
       </div>
       <div class="actions">
         <button id="loadSampleButton" type="button">Load sample</button>
@@ -44,7 +44,6 @@
       <aside class="sidebar" aria-label="Questions">
         <div class="sidebar-header">
           <h2>Questions</h2>
-          <button id="addQuestionButton" type="button" title="Add question">+</button>
         </div>
         <ol id="questionList" class="question-list"></ol>
       </aside>
@@ -52,7 +51,7 @@
       <section class="workspace" aria-live="polite">
         <div id="emptyState" class="empty-state">
           <h2>No questions loaded</h2>
-          <p>Import a JSON file, load the sample, or add your first question manually.</p>
+          <p>Import a JSON file or load the sample to begin reviewing.</p>
         </div>
 
         <article id="reviewPanel" class="review-panel hidden">
@@ -61,17 +60,16 @@
               <span id="questionCounter"></span>
               <span id="revealStatus"></span>
             </div>
-            <label for="questionText">Question</label>
-            <textarea id="questionText" rows="4" spellcheck="true"></textarea>
+            <span class="field-label">Question</span>
+            <p id="questionText" class="question-text"></p>
           </div>
 
           <div class="answer-toolbar">
             <div>
               <h2>Rank Answers</h2>
-              <p>Use the arrows to order answers from best to weakest. Model names stay hidden until reveal.</p>
+              <p>Compare the four columns and use the arrows to order answers from best to weakest. Model names stay hidden until reveal.</p>
             </div>
             <div class="actions">
-              <button id="addAnswerButton" type="button">Add answer</button>
               <button id="resetRankingButton" type="button">Reset ranking</button>
               <button id="revealButton" type="button">Reveal models</button>
             </div>
@@ -95,22 +93,17 @@
 
     <template id="answerTemplate">
       <li class="answer-item">
-        <div class="rank-number"></div>
         <div class="answer-body">
           <div class="answer-header">
+            <span class="rank-number"></span>
             <strong class="answer-label"></strong>
             <span class="model-name hidden"></span>
           </div>
-          <textarea class="answer-text" rows="8" spellcheck="true"></textarea>
-          <label class="model-editor">
-            Model
-            <input class="model-input" type="text" placeholder="Hidden while ranking">
-          </label>
+          <div class="answer-text"></div>
         </div>
         <div class="answer-controls" aria-label="Ranking controls">
           <button type="button" class="move-up" title="Move up">↑</button>
           <button type="button" class="move-down" title="Move down">↓</button>
-          <button type="button" class="remove-answer" title="Remove answer">×</button>
         </div>
       </li>
     </template>
