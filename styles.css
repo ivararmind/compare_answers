@@ -283,9 +283,11 @@ button:focus-visible,
 
 .answer-list {
   display: grid;
-  grid-template-columns: repeat(4, minmax(11rem, 1fr));
+  grid-template-columns: repeat(4, minmax(13rem, 1fr));
   gap: 0.85rem;
   align-items: stretch;
+  overflow-x: auto;
+  padding-bottom: 0.25rem;
 }
 
 .answer-item {
@@ -373,12 +375,6 @@ button:focus-visible,
   }
 
   .answer-list {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (min-width: 781px) and (max-width: 980px) {
-  .answer-list {
-    grid-template-columns: repeat(2, minmax(16rem, 1fr));
+    grid-template-columns: repeat(4, minmax(13rem, 1fr));
   }
 }
